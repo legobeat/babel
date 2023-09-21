@@ -407,7 +407,11 @@ helpers.interopRequireWildcard = helper("7.14.0")`
         if (desc && (desc.get || desc.set)) {
           Object.defineProperty(newObj, key, desc);
         } else {
-          newObj[key] = obj[key];
+          try {
+            newObj[key] = obj[key];
+          } catch (err) {
+            Object.defineProperty(newObj, key, desc);
+          }
         }
       }
     }
